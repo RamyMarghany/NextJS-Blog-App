@@ -1,44 +1,34 @@
-import Hero from "../components/home-page/hero/hero";
+import { Fragment } from "react";
+import Head from "next/head";
+
 import FeaturedPosts from "../components/home-page/featured-posts/featured-posts";
+import Hero from "../components/home-page/hero/hero";
+import { getFeaturedPosts } from "../lib/posts-util";
 
-const DummyData = [
-  {
-    slug: "1",
-    title: "title 1",
-    image: "image1.jpg",
-    excerpt: "excerpt 1",
-    date: "2022-01-15",
-  },
-  {
-    slug: "2",
-    title: "title 2",
-    image: "image2.jpg",
-    excerpt: "excerpt 2",
-    date: "2022-02-25",
-  },
-  {
-    slug: "3",
-    title: "title 3",
-    image: "image3.jpg",
-    excerpt: "excerpt 3",
-    date: "2022-03-25",
-  },
-  {
-    slug: "4",
-    title: "title 4",
-    image: "image4.jpg",
-    excerpt: "excerpt 4",
-    date: "2022-04-25",
-  },
-];
-
-const HomePage = () => {
+function HomePage(props) {
   return (
-    <>
+    <Fragment>
+      <Head>
+        <title>Max' Blog</title>
+        <meta
+          name='description'
+          content='I post about programming and web development.'
+        />
+      </Head>
       <Hero />
-      <FeaturedPosts posts={DummyData} />
-    </>
+      <FeaturedPosts posts={props.posts} />
+    </Fragment>
   );
-};
+}
+
+export function getStaticProps() {
+  const featuredPosts = getFeaturedPosts();
+
+  return {
+    props: {
+      posts: featuredPosts,
+    },
+  };
+}
 
 export default HomePage;

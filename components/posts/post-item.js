@@ -3,18 +3,21 @@ import Image from "next/image";
 
 import classes from "./post-item.module.css";
 
-const PostItem = (props) => {
-  const { title, image, excerpt, date, slug } = props;
+function PostItem(props) {
+  const { title, image, excerpt, date, slug } = props.post;
+
   const formattedDate = new Date(date).toLocaleDateString("en-US", {
     day: "numeric",
     month: "long",
     year: "numeric",
   });
+
   const imagePath = `/images/posts/${slug}/${image}`;
+  const linkPath = `/posts/${slug}`;
 
   return (
     <li className={classes.post}>
-      <Link href={`posts/${slug}`}>
+      <Link href={linkPath}>
         <a>
           <div className={classes.image}>
             <Image
@@ -34,6 +37,6 @@ const PostItem = (props) => {
       </Link>
     </li>
   );
-};
+}
 
 export default PostItem;
